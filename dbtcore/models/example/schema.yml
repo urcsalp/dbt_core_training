@@ -2,15 +2,37 @@
 version: 2
 
 models:
+
+  - name: dbtnotnullproportion1
+    description: "nullproportion test"
+    columns:
+      - name: deptno
+        tests:
+         - dbt_utils.not_null_proportion:
+            at_least: 1
+            at_most:  10
+  - name: emp_rowcount
+    tests:
+     - dbt_utils.equal_rowcount:
+        compare_model: ref('emp11')
+
   - name: my_first_dbt_model
     description: "A starter dbt model"
     columns:
       - name: id
+         
         description: "The primary key for this table"
         tests:
-          - unique
+          - unique 
+ #            config:
+ #              store_failues: true
+ #              schema: test_failures 
           - not_null
-
+          - accepted_values:
+              values: [1,2]
+          - relationships:
+             to: ref('dbt_model')    # master table/model
+             field: id
   - name: my_second_dbt_model
     description: "A starter dbt model"
     columns:
@@ -19,3 +41,5 @@ models:
         tests:
           - unique
           - not_null
+          - accepted_values:
+              values: [1,2]

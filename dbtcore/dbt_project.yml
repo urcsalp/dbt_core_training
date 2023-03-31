@@ -9,6 +9,11 @@ config-version: 2
 # This setting configures which "profile" dbt uses for this project.
 profile: 'dbtcore'
 
+vars:
+  vdeptno: 20','30
+  vdname: SALES MAN
+  vloc: 'NEW YORK'
+
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
 # found in the "models/" directory. You probably won't need to change these!
@@ -33,9 +38,19 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
 
+ # +pre-hook:
+ #   sql: "insert into sf_db.sf_schema.dbt_audits (audit_type) values ('dbt_project level pre hook');commit;" 
+ # +post-hook:
+ #   sql: "insert into sf_db.sf_schema.dbt_audits (audit_type) values ('dbt_project level post hook ');commit;"
+
   dbtcore:
-    materialized: table
+  #  materialized: table
     # Config indicated by + and applies to all files under models/example/
     
-  example:
-      # +materialized: table
+    example:
+      +materialized: table
+
+
+#on-run-start: "insert into sf_db.sf_schema.dbt_audits (audit_type) values ('dbt_project level on-run_start');commit;"
+#on-run-end: "insert into sf_db.sf_schema.dbt_audits (audit_type) values ('dbt_project level on-run_end');commit;"
+
