@@ -1,0 +1,17 @@
+version: 2
+
+
+sources:
+  - name: empdept
+    database: sf_db
+    schema: sf_schema
+    tables:
+      - name: emp
+      - name: dept 
+      - name: payment
+      - name: PAYMENT_METHOD_TYPES
+      - name: orders
+        loaded_at_field: _etl_loaded_at
+        freshness: # make this a little more strict
+          warn_after: {count: 2, period: day}     # period   minute/hour/day  
+          error_after: {count: 6, period: day}

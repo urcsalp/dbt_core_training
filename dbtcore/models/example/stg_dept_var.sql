@@ -1,0 +1,1 @@
+select * from  sf_db.sf_schema.dept where loc not in  ({{ var("vloc") }})

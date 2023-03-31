@@ -1,0 +1,1 @@
+select deptno,min(sal) as minsal ,max(sal) as maxsal from sf_db.sf_schema.emp where deptno not in ('{{ var("vdeptno") }}') group by deptno
